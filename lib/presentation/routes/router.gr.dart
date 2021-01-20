@@ -28,8 +28,11 @@ class Router extends RouterBase {
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
     HomePage: (data) {
+      final args = data.getArgs<HomePageArguments>(
+        orElse: () => HomePageArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const HomePage(),
+        builder: (context) => HomePage(key: args.key),
         settings: data,
       );
     },
@@ -41,5 +44,21 @@ class Router extends RouterBase {
 /// *************************************************************************
 
 extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
-  Future<dynamic> pushHomePage() => push<dynamic>(Routes.homePage);
+  Future<dynamic> pushHomePage({
+    Key key,
+  }) =>
+      push<dynamic>(
+        Routes.homePage,
+        arguments: HomePageArguments(key: key),
+      );
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// HomePage arguments holder class
+class HomePageArguments {
+  final Key key;
+  HomePageArguments({this.key});
 }

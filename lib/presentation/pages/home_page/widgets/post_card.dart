@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:social_media_app/domain/posts/post.dart';
 
 class PostCard extends StatelessWidget {
-  const PostCard({Key key}) : super(key: key);
+  final Post post;
+  const PostCard({Key key, this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +11,7 @@ class PostCard extends StatelessWidget {
       child: Container(
         height: 120,
         child: Center(
-          child: Text('Post Title'),
+          child: Text(post.title),
         ),
       ),
     );
