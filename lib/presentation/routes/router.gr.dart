@@ -11,13 +11,16 @@ import 'package:flutter/material.dart';
 
 import '../pages/home_page/home_page.dart';
 import '../pages/new_post_page/new_post_page.dart';
+import '../pages/post_detail_page/post_detail_page.dart';
 
 class Routes {
   static const String homePage = '/';
   static const String newPostPage = '/new-post-page';
+  static const String postDetailPage = '/post-detail-page';
   static const all = <String>{
     homePage,
     newPostPage,
+    postDetailPage,
   };
 }
 
@@ -27,6 +30,7 @@ class Router extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.homePage, page: HomePage),
     RouteDef(Routes.newPostPage, page: NewPostPage),
+    RouteDef(Routes.postDetailPage, page: PostDetailPage),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -47,6 +51,12 @@ class Router extends RouterBase {
         fullscreenDialog: true,
       );
     },
+    PostDetailPage: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const PostDetailPage(),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -64,6 +74,8 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
       );
 
   Future<dynamic> pushNewPostPage() => push<dynamic>(Routes.newPostPage);
+
+  Future<dynamic> pushPostDetailPage() => push<dynamic>(Routes.postDetailPage);
 }
 
 /// ************************************************************************
