@@ -10,7 +10,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/home_page/home_page.dart';
-import '../pages/new_post_page/widgets/new_post_page.dart';
+import '../pages/new_post_page/new_post_page.dart';
 
 class Routes {
   static const String homePage = '/';

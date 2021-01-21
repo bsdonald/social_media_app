@@ -28,7 +28,11 @@ class HomePageBody extends StatelessWidget {
           );
         }
         if (state is PostsLoadInProgress) {
-          return Container(child: CircularProgressIndicator());
+          return Center(
+            child: Container(
+              child: CircularProgressIndicator(),
+            ),
+          );
         }
         return Container();
       },

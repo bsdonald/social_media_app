@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:social_media_app/presentation/pages/home_page/home_page.dart';
-import 'package:social_media_app/presentation/pages/new_post_page/widgets/new_post_page.dart';
+import 'package:social_media_app/presentation/pages/new_post_page/new_post_page.dart';
 
 
 @MaterialAutoRouter(

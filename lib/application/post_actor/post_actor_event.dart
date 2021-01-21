@@ -28,7 +28,7 @@ class CreatePost extends PostActorEvent {
     @required this.id,
     @required this.userId,
     @required this.title,
-    @required this.body,
+    @required this.body, int creatorId,
   })  : assert(id != null),
         assert(userId != null),
         assert(title != null),
