@@ -21,4 +21,13 @@ class Post {
       body: json['body'],
     );
   }
+
+  // Map toJson() {
+  //   return {
+  //     'userId': userId,
+  //     'id': id,
+  //     'title': title,
+  //     'body': body,
+  //   };
+  // }
 }

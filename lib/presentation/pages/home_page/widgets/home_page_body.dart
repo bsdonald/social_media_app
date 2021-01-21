@@ -17,21 +17,20 @@ class HomePageBody extends StatelessWidget {
         if (state is PostsLoadSuccess) {
           List<Post> posts = state.posts;
           return ListView.builder(
-          itemBuilder: (context, index) {
-            Post post = posts[index];
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: PostCard(post: post),
-            );
-          },
-          itemCount: posts.length,
-        );
+            itemBuilder: (context, index) {
+              Post post = posts[index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: PostCard(post: post),
+              );
+            },
+            itemCount: posts.length,
+          );
         }
         if (state is PostsLoadInProgress) {
-          return CircularProgressIndicator();
+          return Container(child: CircularProgressIndicator());
         }
-
-        
+        return Container();
       },
     );
   }
