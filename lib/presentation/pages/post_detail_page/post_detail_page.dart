@@ -24,11 +24,21 @@ class PostDetailPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(post.title),
+              actions: [
+                FlatButton(
+                  child: Text('Edit'),
+                  onPressed: null,
+                )
+              ],
             ),
             body: PostDetailBody(post),
+            floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.delete_forever),
+              onPressed: null,
+            ),
           );
         }
-        if (state is PostLoadInProgress) {
+        if (state is NetworkRequestInProgress) {
           return Scaffold(
             body: Center(
               child: Container(
@@ -37,6 +47,7 @@ class PostDetailPage extends StatelessWidget {
             ),
           );
         }
+        
         return Scaffold();
       },
     );

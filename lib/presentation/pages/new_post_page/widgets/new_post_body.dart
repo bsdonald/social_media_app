@@ -15,6 +15,14 @@ class NewPostBody extends StatelessWidget {
     final _formKey = GlobalKey();
     return BlocBuilder<PostActorBloc, PostActorState>(
       builder: (context, state) {
+        if (state is NetworkRequestInProgress) {
+          print(state);
+          return Center(
+            child: Container(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
         return Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -38,27 +46,19 @@ class NewPostBody extends StatelessWidget {
                           title: _titleController.text,
                         ),
                       );
-                    if (state is PostCreateInProgress) {
-                      print(state);
-                      return Center(
-                        child: Container(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }
-                    if (state is PostCreateSuccess) {
-                      ExtendedNavigator.of(context).popUntil(
-                        (route) => route.settings.name == Routes.homePage,
-                      );
-                    }
-                    if (state is PostCreateFailure) {
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text('Post creation failed'),
-                      ));
-                    }
+                      if (state is PostCreateSuccess) {
+                        ExtendedNavigator.of(context).popUntil(
+                          (route) => route.settings.name == Routes.homePage,
+                        );
+                      }
+                      if (state is PostCreateFailure) {
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text('Post creation failed'),
+                        ));
+                      }
                     } else {
                       Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text("Please don't leave form blank" ),
+                        content: Text("Please don't leave form blank"),
                       ));
                     }
                   },

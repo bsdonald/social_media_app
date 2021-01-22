@@ -19,7 +19,7 @@ class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
     PostActorEvent event,
   ) async* {
     if (event is GetPost) {
-      yield PostLoadInProgress();
+      yield NetworkRequestInProgress();
       try {
         final Post post = await postRepository.getPost(event.id);
         yield PostLoadSuccess(post: post);
@@ -28,7 +28,7 @@ class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
       }
     }
     if (event is CreatePost) {
-      yield PostCreateInProgress();
+      yield NetworkRequestInProgress();
       try {
         final Post post = await postRepository.create(
           id: event.id,
