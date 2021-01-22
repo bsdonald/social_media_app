@@ -13,7 +13,19 @@ class NewPostBody extends StatelessWidget {
     final TextEditingController _titleController = TextEditingController();
     final TextEditingController _bodyController = TextEditingController();
     final _formKey = GlobalKey();
-    return BlocBuilder<PostActorBloc, PostActorState>(
+    return BlocConsumer<PostActorBloc, PostActorState>(
+      listener: (context, state) {
+        if (state is NetworkRequestSuccess) {
+          ExtendedNavigator.of(context).popUntil(
+            (route) => route.settings.name == Routes.homePage,
+          );
+        }
+        if (state is NetworkRequestFailure) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text('Post creation failed'),
+          ));
+        }
+      },
       builder: (context, state) {
         if (state is NetworkRequestInProgress) {
           print(state);
@@ -46,16 +58,6 @@ class NewPostBody extends StatelessWidget {
                           title: _titleController.text,
                         ),
                       );
-                      if (state is PostCreateSuccess) {
-                        ExtendedNavigator.of(context).popUntil(
-                          (route) => route.settings.name == Routes.homePage,
-                        );
-                      }
-                      if (state is PostCreateFailure) {
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text('Post creation failed'),
-                        ));
-                      }
                     } else {
                       Scaffold.of(context).showSnackBar(SnackBar(
                         content: Text("Please don't leave form blank"),

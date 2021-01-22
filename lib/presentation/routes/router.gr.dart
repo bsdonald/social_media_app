@@ -9,6 +9,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/posts/post.dart';
+import '../pages/edit_post_page/edit_post_page.dart';
 import '../pages/home_page/home_page.dart';
 import '../pages/new_post_page/new_post_page.dart';
 import '../pages/post_detail_page/post_detail_page.dart';
@@ -17,10 +19,12 @@ class Routes {
   static const String homePage = '/';
   static const String newPostPage = '/new-post-page';
   static const String postDetailPage = '/post-detail-page';
+  static const String editPostPage = '/edit-post-page';
   static const all = <String>{
     homePage,
     newPostPage,
     postDetailPage,
+    editPostPage,
   };
 }
 
@@ -31,6 +35,7 @@ class Router extends RouterBase {
     RouteDef(Routes.homePage, page: HomePage),
     RouteDef(Routes.newPostPage, page: NewPostPage),
     RouteDef(Routes.postDetailPage, page: PostDetailPage),
+    RouteDef(Routes.editPostPage, page: EditPostPage),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -60,6 +65,17 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    EditPostPage: (data) {
+      final args = data.getArgs<EditPostPageArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => EditPostPage(
+          key: args.key,
+          post: args.post,
+        ),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
   };
 }
 
@@ -85,6 +101,15 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
         Routes.postDetailPage,
         arguments: PostDetailPageArguments(key: key),
       );
+
+  Future<dynamic> pushEditPostPage({
+    Key key,
+    @required Post post,
+  }) =>
+      push<dynamic>(
+        Routes.editPostPage,
+        arguments: EditPostPageArguments(key: key, post: post),
+      );
 }
 
 /// ************************************************************************
@@ -101,4 +126,11 @@ class HomePageArguments {
 class PostDetailPageArguments {
   final Key key;
   PostDetailPageArguments({this.key});
+}
+
+/// EditPostPage arguments holder class
+class EditPostPageArguments {
+  final Key key;
+  final Post post;
+  EditPostPageArguments({this.key, @required this.post});
 }

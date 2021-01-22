@@ -30,15 +30,38 @@ class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
     if (event is CreatePost) {
       yield NetworkRequestInProgress();
       try {
-        final Post post = await postRepository.create(
+        await postRepository.create(
           id: event.id,
           userId: event.userId,
           title: event.title,
           body: event.body,
         );
-        yield PostCreateSuccess(post: post);
+        yield NetworkRequestSuccess();
       } catch (_) {
-        yield PostCreateFailure();
+        yield NetworkRequestFailure();
+      }
+    }
+    if (event is UpdatePost) {
+      yield NetworkRequestInProgress();
+      try {
+      await postRepository.update(
+          id: event.id,
+          userId: event.userId,
+          title: event.title,
+          body: event.body,
+        );
+        yield NetworkRequestSuccess();
+      } catch (_) {
+        yield NetworkRequestFailure();
+      }
+    }
+    if (event is DeletePost) {
+      yield NetworkRequestInProgress();
+      try {
+        await postRepository.delete(event.id);
+        yield NetworkRequestSuccess();
+      } catch (_) {
+        yield NetworkRequestFailure();
       }
     }
   }

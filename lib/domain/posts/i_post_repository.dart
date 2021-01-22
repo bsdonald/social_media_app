@@ -5,5 +5,5 @@ abstract class IPostRepository {
   Future<Post> getPost(int id);
   Future<Post> create({int id, int userId, String title, String body});
   Future<Post> update({int id, int userId, String title, String body});
-  Future<Post> delete(int id);
+  Future delete(int id);
 }

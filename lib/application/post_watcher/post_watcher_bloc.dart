@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:social_media_app/domain/posts/i_post_repository.dart';
 import 'package:social_media_app/domain/posts/post.dart';
-import 'package:social_media_app/infrastructure/posts/post_repository.dart';
 
 part 'post_watcher_event.dart';
 part 'post_watcher_state.dart';

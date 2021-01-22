@@ -28,7 +28,8 @@ class CreatePost extends PostActorEvent {
     @required this.id,
     @required this.userId,
     @required this.title,
-    @required this.body, int creatorId,
+    @required this.body,
+    int creatorId,
   })  : assert(id != null),
         assert(userId != null),
         assert(title != null),
@@ -43,8 +44,39 @@ class CreatePost extends PostActorEvent {
       ];
 }
 
-// //UpdatePost
-// class UpdatePost extends PostActorEvent {}
+//UpdatePost
+class UpdatePost extends PostActorEvent {
+  final int id;
+  final int userId;
+  final String title;
+  final String body;
 
-// //Delete Post
-// class DeletePost extends PostActorEvent {}
+  const UpdatePost({
+    @required this.id,
+    @required this.userId,
+    @required this.title,
+    @required this.body,
+    int creatorId,
+  })  : assert(id != null),
+        assert(userId != null),
+        assert(title != null),
+        assert(body != null);
+
+  @override
+  List<Object> get props => [
+        id,
+        userId,
+        title,
+        body,
+      ];
+}
+
+//Delete Post
+class DeletePost extends PostActorEvent {
+  final int id;
+
+  const DeletePost({@required this.id}) : assert(id != null);
+
+  @override
+  List<Object> get props => [id];
+}

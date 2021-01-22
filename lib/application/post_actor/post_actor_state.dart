@@ -9,7 +9,6 @@ abstract class PostActorState extends Equatable {
 
 class PostActorInitial extends PostActorState {}
 
-class NetworkRequestInProgress extends PostActorState {}
 
 //Get Post
 class PostLoadSuccess extends PostActorState {
@@ -23,38 +22,8 @@ class PostLoadSuccess extends PostActorState {
 
 class PostLoadFailure extends PostActorState {}
 
-//Create Post
-class PostCreateSuccess extends PostActorState {
-  final Post post;
+class NetworkRequestInProgress extends PostActorState {}
 
-  const PostCreateSuccess({@required this.post}) : assert(post != null);
+class NetworkRequestSuccess extends PostActorState {}
 
-  @override
-  List<Object> get props => [post];
-}
-
-class PostCreateFailure extends PostActorState {}
-
-//Update Post
-class PostUpdateSuccess extends PostActorState {
-  final Post post;
-
-  const PostUpdateSuccess({@required this.post}) : assert(post != null);
-
-  @override
-  List<Object> get props => [post];
-}
-
-class PostUpdateFailure extends PostActorState {}
-
-//Delete Post
-class PostDeleteSuccess extends PostActorState {
-  final Post post;
-
-  const PostDeleteSuccess({@required this.post}) : assert(post != null);
-
-  @override
-  List<Object> get props => [post];
-}
-
-class PostDeleteFailure extends PostActorState {}
+class NetworkRequestFailure extends PostActorState {}
