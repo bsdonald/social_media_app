@@ -9,7 +9,6 @@ import 'package:social_media_app/presentation/pages/new_post_page/new_post_page.
 import 'package:social_media_app/presentation/routes/router.gr.dart';
 
 class HomePage extends StatelessWidget {
-  final PostRepository postRepository = PostRepository();
   HomePage({Key key}) : super(key: key);
 
   @override

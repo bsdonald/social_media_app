@@ -11,6 +11,9 @@ class HomePageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PostWatcherBloc, PostWatcherState>(
       builder: (context, state) {
+        if (state is PostWatcherInitial) {
+          BlocProvider.of<PostWatcherBloc>(context).add(GetPosts());
+        }
         if (state is PostsLoadFailure) {
           return Text('failed');
         }

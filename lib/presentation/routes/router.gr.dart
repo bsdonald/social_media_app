@@ -52,8 +52,11 @@ class Router extends RouterBase {
       );
     },
     PostDetailPage: (data) {
+      final args = data.getArgs<PostDetailPageArguments>(
+        orElse: () => PostDetailPageArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const PostDetailPage(),
+        builder: (context) => PostDetailPage(key: args.key),
         settings: data,
       );
     },
@@ -75,7 +78,13 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
 
   Future<dynamic> pushNewPostPage() => push<dynamic>(Routes.newPostPage);
 
-  Future<dynamic> pushPostDetailPage() => push<dynamic>(Routes.postDetailPage);
+  Future<dynamic> pushPostDetailPage({
+    Key key,
+  }) =>
+      push<dynamic>(
+        Routes.postDetailPage,
+        arguments: PostDetailPageArguments(key: key),
+      );
 }
 
 /// ************************************************************************
@@ -86,4 +95,10 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
 class HomePageArguments {
   final Key key;
   HomePageArguments({this.key});
+}
+
+/// PostDetailPage arguments holder class
+class PostDetailPageArguments {
+  final Key key;
+  PostDetailPageArguments({this.key});
 }

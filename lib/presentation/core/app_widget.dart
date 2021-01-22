@@ -14,7 +14,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => PostWatcherBloc(postRepository: postRepository)..add(GetPosts())),
+        BlocProvider(create: (context) => PostWatcherBloc(postRepository: postRepository)),
         BlocProvider(create: (context) => PostActorBloc(postRepository: postRepository)),
       ],
       child: MaterialApp(

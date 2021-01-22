@@ -22,7 +22,9 @@ class PostRepository implements IPostRepository {
   @override
   Future<Post> getPost(int id) async {
     final response = await http.get('$apiURL/$id');
-    Post post = json.decode(response.body);
+    final retrievedPost = json.decode(response.body);
+    Post post = Post.fromJson(retrievedPost);
+
     if (response.statusCode == 200) {
       return post;
     } else {
