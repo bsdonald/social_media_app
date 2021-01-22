@@ -30,15 +30,12 @@ class PostRepository implements IPostRepository {
     } else {
       throw Exception('Failed to load post');
     }
-      }
+  }
 
   @override
   Future<Post> create({int id, int userId, String title, String body}) async {
     final response = await http.post(
       apiURL,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
       body: jsonEncode(<String, dynamic>{
         'id': id,
         'userId': userId,
@@ -48,9 +45,39 @@ class PostRepository implements IPostRepository {
     );
     Post post = Post.fromJson(jsonDecode(response.body));
     if (response.statusCode == 201) {
-    return post;
-  } else {
-    throw Exception('Failed create post');
+      return post;
+    } else {
+      throw Exception('Failed create post');
+    }
   }
+
+  @override
+  Future<Post> update({int id, int userId, String title, String body}) async {
+    final response = await http.put(
+      '$apiURL/$id',
+      body: jsonEncode(<String, dynamic>{
+        'id': id,
+        'userId': userId,
+        'title': title,
+        'body': body,
+      }),
+    );
+    Post post = Post.fromJson(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      return post;
+    } else {
+      throw Exception('Failed update post');
+    }
+  }
+
+  @override
+  Future<Post> delete(int id) async {
+    final response = await http.delete('$apiURL/$id');
+
+    if (response.statusCode == 200) {
+      return Post.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to delete post');
+    }
   }
 }
