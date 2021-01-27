@@ -8,8 +8,8 @@ class PostRepository implements IPostRepository {
   final String apiURL = 'https://jsonplaceholder.typicode.com/posts';
 
   @override
-  Future<List<Post>> getPosts() async {
-    final response = await http.get(apiURL);
+  Future<List<Post>> getPosts(http.Client client) async {
+    final response = await client.get(apiURL);
     List<Post> posts = postsFromJson(response.body);
     if (response.statusCode == 200) {
       return posts;
@@ -20,8 +20,8 @@ class PostRepository implements IPostRepository {
   }
 
   @override
-  Future<Post> getPost(int id) async {
-    final response = await http.get('$apiURL/$id');
+  Future<Post> getPost(http.Client client, int id) async {
+    final response = await client.get('$apiURL/$id');
     final retrievedPost = json.decode(response.body);
     Post post = Post.fromJson(retrievedPost);
 
@@ -34,8 +34,8 @@ class PostRepository implements IPostRepository {
   }
 
   @override
-  Future<Post> create({int id, int userId, String title, String body}) async {
-    final response = await http.post(
+  Future<Post> create({http.Client client, int id, int userId, String title, String body}) async {
+    final response = await client.post(
       apiURL,
       body: jsonEncode(<String, dynamic>{
         'id': id,
@@ -55,8 +55,8 @@ class PostRepository implements IPostRepository {
   }
 
   @override
-  Future<Post> update({int id, int userId, String title, String body}) async {
-    final response = await http.put(
+  Future<Post> update({http.Client client, int id, int userId, String title, String body}) async {
+    final response = await client.put(
       '$apiURL/$id',
       body: jsonEncode(<String, dynamic>{
         'id': id,
@@ -76,8 +76,8 @@ class PostRepository implements IPostRepository {
   }
 
   @override
-  Future delete(int id) async {
-    final response = await http.delete('$apiURL/$id');
+  Future delete(http.Client client, int id) async {
+    final response = await client.delete('$apiURL/$id');
 
     if (response.statusCode == 200) {
       print('success!');

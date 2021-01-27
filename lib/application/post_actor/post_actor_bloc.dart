@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:social_media_app/domain/posts/i_post_repository.dart';
 import 'package:social_media_app/domain/posts/post.dart';
@@ -11,6 +12,8 @@ part 'post_actor_state.dart';
 
 class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
   final IPostRepository postRepository;
+  final client = http.Client();
+
   PostActorBloc({@required this.postRepository})
       : assert(postRepository != null),
         super(PostActorInitial());
@@ -21,7 +24,7 @@ class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
     if (event is GetPost) {
       yield NetworkRequestInProgress();
       try {
-        final Post post = await postRepository.getPost(event.id);
+        final Post post = await postRepository.getPost(client, event.id);
         yield PostLoadSuccess(post: post);
       } catch (_) {
         yield PostLoadFailure();
@@ -31,6 +34,7 @@ class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
       yield NetworkRequestInProgress();
       try {
         await postRepository.create(
+          client: client,
           id: event.id,
           userId: event.userId,
           title: event.title,
@@ -44,7 +48,8 @@ class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
     if (event is UpdatePost) {
       yield NetworkRequestInProgress();
       try {
-      await postRepository.update(
+        await postRepository.update(
+          client: client,
           id: event.id,
           userId: event.userId,
           title: event.title,
@@ -58,7 +63,7 @@ class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
     if (event is DeletePost) {
       yield NetworkRequestInProgress();
       try {
-        await postRepository.delete(event.id);
+        await postRepository.delete(client, event.id);
         yield NetworkRequestSuccess();
       } catch (_) {
         yield NetworkRequestFailure();
