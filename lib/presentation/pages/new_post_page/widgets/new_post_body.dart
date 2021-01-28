@@ -61,6 +61,7 @@ class NewPostBody extends StatelessWidget {
                     } else {
                       Scaffold.of(context).showSnackBar(SnackBar(
                         content: Text("Please don't leave form blank"),
+                        duration: Duration(seconds: 1),
                       ));
                     }
                   },

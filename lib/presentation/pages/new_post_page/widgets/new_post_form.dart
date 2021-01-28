@@ -27,10 +27,12 @@ class NewPostForm extends StatelessWidget {
               SMTextFormField(
                 controller: _titleController,
                 hintText: 'Title',
+                key: Key('titleKey'),
               ),
               SMTextFormField(
                 controller: _bodyController,
                 hintText: 'Body',
+                key: Key('bodyKey'),
               ),
             ],
           ),
