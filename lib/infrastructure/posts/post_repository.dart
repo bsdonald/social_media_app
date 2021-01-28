@@ -78,9 +78,11 @@ class PostRepository implements IPostRepository {
   @override
   Future delete(http.Client client, int id) async {
     final response = await client.delete('$apiURL/$id');
+    Post post = Post.fromJson(jsonDecode(response.body));
 
     if (response.statusCode == 200) {
       print('success!');
+      return post;
     } else {
       print('Failed!');
       throw Exception('Failed to delete post');
